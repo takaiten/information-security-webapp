@@ -1,9 +1,8 @@
 import { createAsyncAction, errorResult, successResult } from 'pullstate';
 
-import { REFRESH_TOKEN_KEY, AUTH_TOKEN_KEY } from '~/constants/auth';
-
-import { AppStore } from '~/services/store';
+import { AUTH_TOKEN_KEY, REFRESH_TOKEN_KEY } from '~/constants/auth';
 import API from '~/services/api';
+import { AppStore } from '~/services/store';
 
 export const isRefreshTokenPresent = () =>
     Boolean(localStorage.getItem(REFRESH_TOKEN_KEY));

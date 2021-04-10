@@ -1,10 +1,10 @@
+import { Button, Form } from 'antd';
+import MaskedInput from 'antd-mask-input';
 import React, { useCallback } from 'react';
 import { useLocation } from 'wouter';
-import { Form, Button } from 'antd';
-import MaskedInput from 'antd-mask-input';
 
+import { Card, Container } from '~/components/common/styled';
 import { LOGIN } from '~/constants/Routes';
-import { Container, Card } from '~/components/common/styled';
 import { validateSerialNumber } from '~/helpers/serialNumber';
 
 const SERIAL_NUMBER_VALIDATION_RULES = [

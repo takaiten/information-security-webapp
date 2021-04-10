@@ -1,9 +1,8 @@
 import { createAsyncAction, errorResult, successResult } from 'pullstate';
 
-import { AppStore } from '~/services/store';
-import API from '~/services/api';
-
 import { REFRESH_TOKEN_KEY } from '~/constants/auth';
+import API from '~/services/api';
+import { AppStore } from '~/services/store';
 
 export const validateSerialNumber = createAsyncAction(
     async ({ serialNumber }) => {

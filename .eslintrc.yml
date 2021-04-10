@@ -12,6 +12,7 @@ parserOptions:
     sourceType: module
 plugins:
     - react
+    - simple-import-sort
 settings:
     react:
         version: detect
@@ -20,5 +21,6 @@ rules:
     dot-notation: off
     no-console: warn
     camelcase: error
+    simple-import-sort/imports: error
     prefer-promise-reject-errors: off
     arrow-body-style: [error, as-needed]

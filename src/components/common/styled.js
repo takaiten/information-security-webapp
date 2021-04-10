@@ -1,5 +1,5 @@
-import styled from 'styled-components';
 import { Card as ACard } from 'antd';
+import styled from 'styled-components';
 
 export const Container = styled.div`
     background-color: rgb(56, 56, 61);

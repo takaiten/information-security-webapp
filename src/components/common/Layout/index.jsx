@@ -1,7 +1,7 @@
-import React from 'react';
+import { GroupOutlined, HomeOutlined, UserOutlined } from '@ant-design/icons';
 import { Layout, Menu } from 'antd';
-import { useLocation, Link } from 'wouter';
-import { HomeOutlined, UserOutlined, GroupOutlined } from '@ant-design/icons';
+import React from 'react';
+import { Link, useLocation } from 'wouter';
 
 import * as ROUTES from '~/constants/Routes';
 

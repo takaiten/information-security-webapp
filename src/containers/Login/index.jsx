@@ -1,9 +1,9 @@
-import { Input, Form, Button } from 'antd';
+import { Button, Form, Input } from 'antd';
 import React, { useCallback } from 'react';
 import { useLocation } from 'wouter';
 
+import { Card, Container } from '~/components/common/styled';
 import { HOME } from '~/constants/Routes';
-import { Container, Card } from '~/components/common/styled';
 import { authenticateUser } from '~/helpers/auth';
 
 const EMAIL_REGEXP = /^\w+@\w+\.\w{2,3}$/;
