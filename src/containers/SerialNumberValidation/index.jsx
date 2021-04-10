@@ -20,12 +20,9 @@ export const SerialNumberValidation = () => {
 
     const handleSubmit = useCallback(
         async (values) => {
-            console.log(values);
-
             await validateSerialNumber.run({
-                serialNumber: values['serialNumber'],
+                serialNumber: values['serialNumber'].replace(/-/g, ''),
             });
-
             setLocation(LOGIN);
         },
         [setLocation],

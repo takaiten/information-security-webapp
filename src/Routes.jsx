@@ -2,8 +2,13 @@ import React from 'react';
 import { Switch, Route, Redirect } from 'wouter';
 
 import * as ROUTES from '~/constants/Routes';
-import { SerialNumberValidation } from '~/containers/SerialNumberValidation';
-import { Login } from '~/containers/Login';
+import {
+    Login,
+    Home,
+    PhoneBook,
+    SerialNumberValidation,
+    Users,
+} from '~/containers';
 
 const RestrictedRoute = ({
     isAuthenticated,
@@ -19,7 +24,7 @@ const RestrictedRoute = ({
 
 export const ActivationRouter = () => (
     <Switch>
-        <Route path={ROUTES.ACTIVATION}>
+        <Route path={ROUTES.ACTIVATION} component={SerialNumberValidation}>
             <SerialNumberValidation />
         </Route>
         <Redirect from="*" to={ROUTES.ACTIVATION} />
@@ -31,13 +36,22 @@ export const Router = ({ isAuthenticated }) => (
         <RestrictedRoute
             isAuthenticated={!isAuthenticated}
             path={ROUTES.LOGIN}
-            redirectTo={ROUTES.APP}
+            redirectTo={ROUTES.HOME}
         >
             <Login />
         </RestrictedRoute>
-        <RestrictedRoute isAuthenticated={isAuthenticated} path={ROUTES.APP}>
-            APP
+        <RestrictedRoute isAuthenticated={isAuthenticated} path={ROUTES.HOME}>
+            <Home />
         </RestrictedRoute>
-        <Redirect from="*" to={isAuthenticated ? ROUTES.LOGIN : ROUTES.APP} />
+        <RestrictedRoute isAuthenticated={isAuthenticated} path={ROUTES.USERS}>
+            <Users />
+        </RestrictedRoute>
+        <RestrictedRoute
+            isAuthenticated={isAuthenticated}
+            path={ROUTES.PHONEBOOK}
+        >
+            <PhoneBook />
+        </RestrictedRoute>
+        <Redirect from="*" to={isAuthenticated ? ROUTES.LOGIN : ROUTES.HOME} />
     </Switch>
 );

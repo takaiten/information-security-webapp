@@ -20,4 +20,5 @@ rules:
     dot-notation: off
     no-console: warn
     camelcase: error
+    prefer-promise-reject-errors: off
     arrow-body-style: [error, as-needed]

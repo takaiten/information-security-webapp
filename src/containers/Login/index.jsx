@@ -2,14 +2,11 @@ import { Input, Form, Button } from 'antd';
 import React, { useCallback } from 'react';
 import { useLocation } from 'wouter';
 
-import { AppStore } from '~/services/store';
-
-import { APP } from '~/constants/Routes';
-import { AUTH_TOKEN_KEY } from '~/constants/auth';
+import { HOME } from '~/constants/Routes';
 import { Container, Card } from '~/components/common/styled';
+import { authenticateUser } from '~/helpers/auth';
 
 const EMAIL_REGEXP = /^\w+@\w+\.\w{2,3}$/;
-const PASSWORD_REGEXP = /^(?=.*[A-Z])(?=.*\d)(?=.*\W)(?!.*(.)\1\1)[\w\W]{6,20}$/;
 
 const EMAIL_VALIDATION_RULES = [
     { required: true, message: 'This field is required' },
@@ -18,29 +15,18 @@ const EMAIL_VALIDATION_RULES = [
 
 const PASSWORD_VALIDATION_RULES = [
     { required: true, message: 'This field is required' },
-    { pattern: PASSWORD_REGEXP, message: "Password isn't strong enough" },
+    { min: 6, message: 'Password must contain more than 6 symbols' },
+    { min: 20, message: 'Password must contain less than 20 symbols' },
 ];
-
-const PASSWORD_TOOLTIP = `
-Password must contain:
-6-20 symbols;
-At least one of each:
-        capital letter;
-        numeric number;
-        special symbol (!,$,^...).
-`;
 
 export const Login = () => {
     const [, setLocation] = useLocation();
 
     const handleSubmit = useCallback(
-        (values) => {
-            console.log(values);
-            localStorage.setItem(AUTH_TOKEN_KEY, values['serialNumber']);
-            AppStore.update((s) => {
-                s.isAuthenticated = true;
-            });
-            setLocation(APP);
+        async (values) => {
+            await authenticateUser.run(values);
+
+            setLocation(HOME);
         },
         [setLocation],
     );
@@ -66,7 +52,6 @@ export const Login = () => {
                     <Form.Item
                         name="password"
                         label="Password"
-                        tooltip={PASSWORD_TOOLTIP}
                         rules={PASSWORD_VALIDATION_RULES}
                     >
                         <Input placeholder="Password" type="password" />
