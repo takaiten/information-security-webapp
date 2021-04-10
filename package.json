@@ -1,0 +1,41 @@
+{
+    "scripts": {
+        "start": "snowpack dev",
+        "build": "snowpack build",
+        "prepare": "husky install",
+        "pre-commit": "lint-staged",
+        "lint": "eslint ./src/**/* --ext=jsx,js",
+        "lint:fix": "eslint ./src/**/* --ext=jsx,js --fix",
+        "format": "prettier --write \"**/*.{js,jsx,json,md}\""
+    },
+    "lint-staged": {
+        "*.{js,jsx}": [
+            "eslint --fix",
+            "prettier --write"
+        ]
+    },
+    "devDependencies": {
+        "@snowpack/plugin-react-refresh": "^2.4.2",
+        "eslint": "^7.23.0",
+        "eslint-config-prettier": "^8.1.0",
+        "eslint-config-standard": "^16.0.2",
+        "eslint-plugin-import": "^2.22.1",
+        "eslint-plugin-node": "^11.1.0",
+        "eslint-plugin-prettier": "^3.3.1",
+        "eslint-plugin-promise": "^4.3.1",
+        "eslint-plugin-react": "^7.23.2",
+        "husky": "^6.0.0",
+        "lint-staged": "^10.5.4",
+        "prettier": "^2.2.1",
+        "snowpack": "^3.2.2"
+    },
+    "dependencies": {
+        "react": "^17.0.2",
+        "react-dom": "^17.0.2",
+        "wouter": "^2.7.4"
+    },
+    "engines": {
+        "node": ">=14",
+        "pnpm": ">=6"
+    }
+}
