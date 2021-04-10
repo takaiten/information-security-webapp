@@ -1,7 +1,7 @@
 import { createAsyncAction, errorResult, successResult } from 'pullstate';
 
 import { AppStore } from '~/services/store';
-import { API } from '~/services/api';
+import API from '~/services/api';
 
 // import { REFRESH_TOKEN_KEY } from '~/constants/auth';
 
