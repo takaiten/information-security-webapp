@@ -15,4 +15,8 @@ plugins:
 settings:
     react:
         version: detect
-rules: {}
+rules: 
+    react/prop-types: off
+    dot-notation: off
+    camelcase: error
+    arrow-body-style: [error, as-needed]

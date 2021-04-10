@@ -1,22 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 
-const App = () => {
-    const [count, setCount] = useState(0);
+import { isRefreshTokenPresent, isAuthTokenPresent } from '~/helpers/auth';
 
-    useEffect(() => {
-        const timer = setTimeout(() => setCount(count + 1), 1000);
-        return () => clearTimeout(timer);
-    }, [count, setCount]);
+import { Routes } from './Routes';
+import { SerialNumberValidation } from '~/containers/SerialNumberValidation';
 
-    return (
-        <div className="App">
-            <header className="App-header">
-                <p>
-                    This page has been open for <code>{count}</code> seconds.
-                </p>
-            </header>
-        </div>
+export const App = () =>
+    isRefreshTokenPresent() ? (
+        <Routes isAuthenticated={isAuthTokenPresent()} />
+    ) : (
+        <SerialNumberValidation />
     );
-};
-
-export default App;
