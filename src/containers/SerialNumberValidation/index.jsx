@@ -3,11 +3,9 @@ import { useLocation } from 'wouter';
 import { Form, Button } from 'antd';
 import MaskedInput from 'antd-mask-input';
 
-import { AppStore } from '~/services/store';
-
 import { LOGIN } from '~/constants/Routes';
-import { REFRESH_TOKEN_KEY } from '~/constants/auth';
 import { Container, Card } from '~/components/common/styled';
+import { validateSerialNumber } from '~/helpers/serialNumber';
 
 const SERIAL_NUMBER_VALIDATION_RULES = [
     { required: true, message: 'This field is required' },
@@ -21,12 +19,13 @@ export const SerialNumberValidation = () => {
     const [, setLocation] = useLocation();
 
     const handleSubmit = useCallback(
-        (values) => {
+        async (values) => {
             console.log(values);
-            localStorage.setItem(REFRESH_TOKEN_KEY, values['serialNumber']);
-            AppStore.update((s) => {
-                s.isActivated = true;
+
+            await validateSerialNumber.run({
+                serialNumber: values['serialNumber'],
             });
+
             setLocation(LOGIN);
         },
         [setLocation],

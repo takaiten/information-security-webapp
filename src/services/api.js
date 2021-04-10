@@ -3,7 +3,7 @@ import axios from 'axios';
 import { API_URL, AUTH_TOKEN_KEY } from '~/constants';
 // TODO: Move to const or env
 
-const api = axios.create({
+const API = axios.create({
     baseURL: API_URL,
     headers: {
         'Content-Type': 'application/json',
@@ -18,7 +18,7 @@ const api = axios.create({
     },
 });
 
-api.interceptors.response.use(
+API.interceptors.response.use(
     (response) => Promise.resolve(response.data),
     ({ response }) => {
         if (response.status === 403) {
@@ -29,4 +29,4 @@ api.interceptors.response.use(
     },
 );
 
-export default api;
+export default API;
