@@ -17,6 +17,7 @@ module.exports = {
         // "bundle": true,
     },
     packageOptions: {
+        knownEntrypoints: ['antd'],
         /* ... */
     },
     devOptions: {

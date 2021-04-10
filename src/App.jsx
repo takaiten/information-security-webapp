@@ -1,13 +1,16 @@
 import React from 'react';
 
-import { isRefreshTokenPresent, isAuthTokenPresent } from '~/helpers/auth';
+import { AppStore } from '~/services/store';
 
-import { Routes } from './Routes';
-import { SerialNumberValidation } from '~/containers/SerialNumberValidation';
+import { Router, ActivationRouter } from './Routes';
 
-export const App = () =>
-    isRefreshTokenPresent() ? (
-        <Routes isAuthenticated={isAuthTokenPresent()} />
+export const App = () => {
+    const isActivated = AppStore.useState((s) => s.isActivated);
+    const isAuthenticated = AppStore.useState((s) => s.isAuthenticated);
+
+    return isActivated ? (
+        <Router isAuthenticated={isAuthenticated} />
     ) : (
-        <SerialNumberValidation />
+        <ActivationRouter />
     );
+};
