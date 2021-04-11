@@ -65,7 +65,7 @@ export const PhoneBookEntryCreation = () => {
                 </Form.Item>
                 <Form.Item>
                     <Button type="primary" htmlType="submit">
-                        Submit
+                        Create
                     </Button>
                 </Form.Item>
             </Form>

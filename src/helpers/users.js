@@ -46,8 +46,19 @@ export const deleteUserById = createAsyncAction(async ({ userId }) => {
 
     if (result.success) {
         getAllUsers.run();
-        return successResult(result.data);
+        return successResult();
     }
 
     return errorResult([], `Couldn't delete user ${userId}`);
+});
+
+export const createNewUser = createAsyncAction(async (values) => {
+    const result = await API.post(`users/`, values);
+
+    if (result.success) {
+        getAllUsers.run();
+        return successResult();
+    }
+
+    return errorResult([], `Couldn't create new user`);
 });

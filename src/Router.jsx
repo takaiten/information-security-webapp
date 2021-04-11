@@ -9,6 +9,7 @@ import {
     PhoneBookEntryCreation,
     SerialNumberValidation,
     Users,
+    UsersCreation,
 } from '~/containers';
 
 const RestrictedRoute = ({
@@ -67,7 +68,7 @@ export const Router = ({ isAuthenticated, isAdmin, isManager }) => (
                 isAuthenticated={isAuthenticated}
                 path={ROUTES.USERS_CREATE}
             >
-                {/* //TODO: <UsersCreation /> */}
+                <UsersCreation />
             </RestrictedRoute>
         )}
         <Redirect
