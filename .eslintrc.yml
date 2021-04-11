@@ -20,7 +20,7 @@ rules:
     react/prop-types: off
     dot-notation: off
     no-console: warn
-    camelcase: error
+    camelcase: warn
     simple-import-sort/imports: error
     prefer-promise-reject-errors: off
     arrow-body-style: [error, as-needed]

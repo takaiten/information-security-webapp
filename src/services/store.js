@@ -6,4 +6,5 @@ export const AppStore = new Store({
     isAuthenticated: isAuthTokenPresent(),
     isActivated: isRefreshTokenPresent(),
     user: {},
+    users: [],
 });

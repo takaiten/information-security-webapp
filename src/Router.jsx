@@ -31,7 +31,7 @@ export const ActivationRouter = () => (
     </Switch>
 );
 
-export const Router = ({ isAuthenticated }) => (
+export const Router = ({ isAuthenticated, hasAdminRights }) => (
     <Switch>
         <RestrictedRoute
             isAuthenticated={!isAuthenticated}
@@ -43,9 +43,14 @@ export const Router = ({ isAuthenticated }) => (
         <RestrictedRoute isAuthenticated={isAuthenticated} path={ROUTES.HOME}>
             <Home />
         </RestrictedRoute>
-        <RestrictedRoute isAuthenticated={isAuthenticated} path={ROUTES.USERS}>
-            <Users />
-        </RestrictedRoute>
+        {hasAdminRights && (
+            <RestrictedRoute
+                isAuthenticated={isAuthenticated}
+                path={ROUTES.USERS}
+            >
+                <Users />
+            </RestrictedRoute>
+        )}
         <RestrictedRoute
             isAuthenticated={isAuthenticated}
             path={ROUTES.PHONEBOOK}
