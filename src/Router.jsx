@@ -4,10 +4,9 @@ import { Redirect, Route, Switch } from 'wouter';
 import { CommonLayout } from '~/components/common/Layout';
 import * as ROUTES from '~/constants/Routes';
 import {
-    Home,
     Login,
     PhoneBook,
-    PhoneBookForm,
+    PhoneBookEntryCreation,
     SerialNumberValidation,
     Users,
 } from '~/containers';
@@ -36,39 +35,44 @@ export const ActivationRouter = () => (
     </Switch>
 );
 
-export const Router = ({ isAuthenticated, hasAdminRights }) => (
+export const Router = ({ isAuthenticated, isAdmin, isManager }) => (
     <Switch>
         <RestrictedRoute
             isAuthenticated={!isAuthenticated}
             path={ROUTES.LOGIN}
-            redirectTo={ROUTES.HOME}
+            redirectTo={ROUTES.PHONEBOOK}
             wrapper={React.Fragment}
         >
             <Login />
         </RestrictedRoute>
-        <RestrictedRoute isAuthenticated={isAuthenticated} path={ROUTES.HOME}>
-            <Home />
+        <RestrictedRoute isAuthenticated={isAuthenticated} path={ROUTES.USERS}>
+            <Users />
         </RestrictedRoute>
-        {hasAdminRights && (
-            <RestrictedRoute
-                isAuthenticated={isAuthenticated}
-                path={ROUTES.USERS}
-            >
-                <Users />
-            </RestrictedRoute>
-        )}
         <RestrictedRoute
             isAuthenticated={isAuthenticated}
             path={ROUTES.PHONEBOOK}
         >
             <PhoneBook />
         </RestrictedRoute>
-        <RestrictedRoute
-            isAuthenticated={isAuthenticated}
-            path={ROUTES.PHONEBOOK_CREATE}
-        >
-            <PhoneBookForm />
-        </RestrictedRoute>
-        <Redirect from="*" to={isAuthenticated ? ROUTES.LOGIN : ROUTES.HOME} />
+        {(isAdmin || isManager) && (
+            <RestrictedRoute
+                isAuthenticated={isAuthenticated}
+                path={ROUTES.PHONEBOOK_CREATE}
+            >
+                <PhoneBookEntryCreation />
+            </RestrictedRoute>
+        )}
+        {isAdmin && (
+            <RestrictedRoute
+                isAuthenticated={isAuthenticated}
+                path={ROUTES.USERS_CREATE}
+            >
+                {/* //TODO: <UsersCreation /> */}
+            </RestrictedRoute>
+        )}
+        <Redirect
+            from="*"
+            to={isAuthenticated ? ROUTES.LOGIN : ROUTES.PHONEBOOK}
+        />
     </Switch>
 );

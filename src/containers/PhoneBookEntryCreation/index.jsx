@@ -6,10 +6,12 @@ import { useLocation } from 'wouter';
 import { PHONEBOOK } from '~/constants/Routes';
 import { createPhoneBookEntry } from '~/helpers/phoneBook';
 
-export const PhoneBookForm = () => {
+export const PhoneBookEntryCreation = () => {
     const [, setLocation] = useLocation();
+
     const handleSubmit = useCallback(async (values) => {
         const result = await createPhoneBookEntry.run(values);
+
         if (!result.error) {
             message.success('PhoneBook entry was successfully created!');
             setLocation(PHONEBOOK);

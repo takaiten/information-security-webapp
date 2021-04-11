@@ -6,9 +6,8 @@ import { AppStore } from '~/services/store';
 import { ActivationRouter, Router } from './Router';
 
 export const App = () => {
-    const hasAdminRights = AppStore.useState(
-        (s) => isUserAdmin(s.user) || isUserManager(s.user),
-    );
+    const isAdmin = AppStore.useState((s) => isUserAdmin(s.user));
+    const isManager = AppStore.useState((s) => isUserManager(s.user));
     const isActivated = AppStore.useState((s) => s.isActivated);
     const isAuthenticated = AppStore.useState((s) => s.isAuthenticated);
 
@@ -19,7 +18,8 @@ export const App = () => {
     return isActivated ? (
         <Router
             isAuthenticated={isAuthenticated}
-            hasAdminRights={hasAdminRights}
+            isManager={isManager}
+            isAdmin={isAdmin}
         />
     ) : (
         <ActivationRouter />

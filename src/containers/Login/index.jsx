@@ -3,7 +3,7 @@ import React, { useCallback, useState } from 'react';
 import { useLocation } from 'wouter';
 
 import { Card, Container } from '~/components/common/styled';
-import { HOME } from '~/constants/Routes';
+import { PHONEBOOK } from '~/constants/Routes';
 import { authenticateUser } from '~/helpers/auth';
 
 const EMAIL_REGEXP = /^\w+@\w+\.\w{2,3}$/;
@@ -39,7 +39,7 @@ export const Login = () => {
                 }
                 return;
             }
-            setLocation(HOME);
+            setLocation(PHONEBOOK);
         },
         [setLocation],
     );

@@ -26,3 +26,14 @@ export const createPhoneBookEntry = createAsyncAction(async (values) => {
 
     return errorResult([], "Couldn't create phonebook entry");
 });
+
+export const deletePhoneBookEntry = createAsyncAction(async ({ entryId }) => {
+    const result = await API.delete(`phonebook/${entryId}`);
+
+    if (result.success) {
+        getAllPhoneBookEntries.run();
+        return successResult();
+    }
+
+    return errorResult([], "Couldn't create phonebook entry");
+});
