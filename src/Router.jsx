@@ -1,11 +1,13 @@
 import React from 'react';
 import { Redirect, Route, Switch } from 'wouter';
 
+import { CommonLayout } from '~/components/common/Layout';
 import * as ROUTES from '~/constants/Routes';
 import {
     Home,
     Login,
     PhoneBook,
+    PhoneBookForm,
     SerialNumberValidation,
     Users,
 } from '~/containers';
@@ -14,10 +16,13 @@ const RestrictedRoute = ({
     isAuthenticated,
     children,
     redirectTo = ROUTES.LOGIN,
+    wrapper: Wrapper = CommonLayout,
     ...rest
 }) =>
     isAuthenticated ? (
-        <Route {...rest}>{children}</Route>
+        <Route {...rest}>
+            <Wrapper>{children}</Wrapper>
+        </Route>
     ) : (
         <Redirect to={redirectTo} />
     );
@@ -37,6 +42,7 @@ export const Router = ({ isAuthenticated, hasAdminRights }) => (
             isAuthenticated={!isAuthenticated}
             path={ROUTES.LOGIN}
             redirectTo={ROUTES.HOME}
+            wrapper={React.Fragment}
         >
             <Login />
         </RestrictedRoute>
@@ -56,6 +62,12 @@ export const Router = ({ isAuthenticated, hasAdminRights }) => (
             path={ROUTES.PHONEBOOK}
         >
             <PhoneBook />
+        </RestrictedRoute>
+        <RestrictedRoute
+            isAuthenticated={isAuthenticated}
+            path={ROUTES.PHONEBOOK_CREATE}
+        >
+            <PhoneBookForm />
         </RestrictedRoute>
         <Redirect from="*" to={isAuthenticated ? ROUTES.LOGIN : ROUTES.HOME} />
     </Switch>

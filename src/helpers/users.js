@@ -45,7 +45,7 @@ export const deleteUserById = createAsyncAction(async ({ userId }) => {
     const result = await API.delete(`users/${userId}`);
 
     if (result.success) {
-        getAllUsers.run(undefined);
+        getAllUsers.run();
         return successResult(result.data);
     }
 

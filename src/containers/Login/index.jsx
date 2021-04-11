@@ -81,7 +81,7 @@ export const Login = () => {
                         }
                         rules={PASSWORD_VALIDATION_RULES}
                     >
-                        <Input placeholder="Password" type="password" />
+                        <Input.Password placeholder="Password" />
                     </Form.Item>
                     <Form.Item>
                         <Button type="primary" htmlType="submit">

@@ -1,8 +1,6 @@
-import { Button, Card, List, Spin, Tag } from 'antd';
-import Avatar from 'antd/lib/avatar/avatar';
+import { Avatar, Button, Card, List, Spin, Tag } from 'antd';
 import React, { useCallback } from 'react';
 
-import { CommonLayout } from '~/components/common/Layout';
 import { ROLES_BY_ID, ROLES_MAP } from '~/constants/users';
 import {
     deleteUserById,
@@ -36,52 +34,48 @@ export const Users = () => {
     );
 
     return (
-        <CommonLayout>
-            <Spin spinning={!finished}>
-                <List
-                    grid={{
-                        gutter: 16,
-                        xs: 1,
-                        sm: 2,
-                        md: 4,
-                        lg: 4,
-                        xl: 6,
-                        xxl: 3,
-                    }}
-                    itemLayout="horizontal"
-                    dataSource={result.payload || []}
-                    renderItem={({ name, email, role_id, id }) => (
-                        <List.Item key={id}>
-                            <Card
-                                title={
-                                    <Tag>{ROLES_BY_ID[role_id] || role_id}</Tag>
+        <Spin spinning={!finished}>
+            <List
+                grid={{
+                    gutter: 16,
+                    xs: 1,
+                    sm: 2,
+                    md: 4,
+                    lg: 4,
+                    xl: 6,
+                    xxl: 3,
+                }}
+                itemLayout="horizontal"
+                dataSource={result.payload || []}
+                renderItem={({ name, email, role_id, id }) => (
+                    <List.Item key={id}>
+                        <Card
+                            title={<Tag>{ROLES_BY_ID[role_id] || role_id}</Tag>}
+                            extra={
+                                canCurrentUserDelete({ role_id, id }) && (
+                                    <Button
+                                        data-user-id={id}
+                                        onClick={handleUserDelete}
+                                        type="danger"
+                                    >
+                                        Delete
+                                    </Button>
+                                )
+                            }
+                        >
+                            <Card.Meta
+                                avatar={
+                                    <Avatar size={55}>
+                                        {name?.slice(0, 2)}
+                                    </Avatar>
                                 }
-                                extra={
-                                    canCurrentUserDelete({ role_id, id }) && (
-                                        <Button
-                                            data-user-id={id}
-                                            onClick={handleUserDelete}
-                                            type="danger"
-                                        >
-                                            Delete
-                                        </Button>
-                                    )
-                                }
-                            >
-                                <Card.Meta
-                                    avatar={
-                                        <Avatar size={55}>
-                                            {name?.slice(0, 2)}
-                                        </Avatar>
-                                    }
-                                    title={name}
-                                    description={email}
-                                />
-                            </Card>
-                        </List.Item>
-                    )}
-                />
-            </Spin>
-        </CommonLayout>
+                                title={name}
+                                description={email}
+                            />
+                        </Card>
+                    </List.Item>
+                )}
+            />
+        </Spin>
     );
 };
