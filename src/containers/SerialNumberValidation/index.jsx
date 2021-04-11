@@ -1,6 +1,6 @@
-import { Button, Form } from 'antd';
+import { Button, Form, Typography } from 'antd';
 import MaskedInput from 'antd-mask-input';
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import { useLocation } from 'wouter';
 
 import { Card, Container } from '~/components/common/styled';
@@ -17,12 +17,18 @@ const SERIAL_NUMBER_VALIDATION_RULES = [
 
 export const SerialNumberValidation = () => {
     const [, setLocation] = useLocation();
+    const [apiError, setApiError] = useState('');
 
     const handleSubmit = useCallback(
         async (values) => {
-            await validateSerialNumber.run({
+            setApiError('');
+            const result = await validateSerialNumber.run({
                 serialNumber: values['serialNumber'].replace(/-/g, ''),
             });
+            if (result.error) {
+                setApiError(result.message);
+                return;
+            }
             setLocation(LOGIN);
         },
         [setLocation],
@@ -44,6 +50,13 @@ export const SerialNumberValidation = () => {
                         label="Please enter serial number"
                         tooltip="Unique key composed of 16 symbols"
                         rules={SERIAL_NUMBER_VALIDATION_RULES}
+                        extra={
+                            apiError && (
+                                <Typography.Text type="danger">
+                                    {apiError}
+                                </Typography.Text>
+                            )
+                        }
                     >
                         <MaskedInput
                             mask="####-####-####-####"

@@ -1,10 +1,10 @@
 import React from 'react';
-import { Switch, Route, Redirect } from 'wouter';
+import { Redirect, Route, Switch } from 'wouter';
 
 import * as ROUTES from '~/constants/Routes';
 import {
-    Login,
     Home,
+    Login,
     PhoneBook,
     SerialNumberValidation,
     Users,

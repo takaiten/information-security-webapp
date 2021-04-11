@@ -1,5 +1,5 @@
-import { Button, Form, Input } from 'antd';
-import React, { useCallback } from 'react';
+import { Button, Form, Input, Typography } from 'antd';
+import React, { useCallback, useState } from 'react';
 import { useLocation } from 'wouter';
 
 import { Card, Container } from '~/components/common/styled';
@@ -16,16 +16,29 @@ const EMAIL_VALIDATION_RULES = [
 const PASSWORD_VALIDATION_RULES = [
     { required: true, message: 'This field is required' },
     { min: 6, message: 'Password must contain more than 6 symbols' },
-    { min: 20, message: 'Password must contain less than 20 symbols' },
+    { max: 20, message: 'Password must contain less than 20 symbols' },
 ];
 
 export const Login = () => {
     const [, setLocation] = useLocation();
+    const [emailError, setEmailError] = useState('');
+    const [passwordError, setPasswordError] = useState('');
 
     const handleSubmit = useCallback(
         async (values) => {
-            await authenticateUser.run(values);
+            setEmailError('');
+            setPasswordError('');
 
+            const result = await authenticateUser.run(values);
+            if (result.error) {
+                if (result.message.includes('email')) {
+                    setEmailError(result.message);
+                }
+                if (result.message.includes('password')) {
+                    setPasswordError(result.message);
+                }
+                return;
+            }
             setLocation(HOME);
         },
         [setLocation],
@@ -45,6 +58,13 @@ export const Login = () => {
                     <Form.Item
                         name="email"
                         label="Email"
+                        extra={
+                            emailError && (
+                                <Typography.Text type="danger">
+                                    {emailError}
+                                </Typography.Text>
+                            )
+                        }
                         rules={EMAIL_VALIDATION_RULES}
                     >
                         <Input placeholder="example@mail.com" type="text" />
@@ -52,6 +72,13 @@ export const Login = () => {
                     <Form.Item
                         name="password"
                         label="Password"
+                        extra={
+                            passwordError && (
+                                <Typography.Text type="danger">
+                                    {passwordError}
+                                </Typography.Text>
+                            )
+                        }
                         rules={PASSWORD_VALIDATION_RULES}
                     >
                         <Input placeholder="Password" type="password" />
